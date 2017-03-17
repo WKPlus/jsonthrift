@@ -1,0 +1,475 @@
+{
+  "param": 
+    [
+      {
+        "param_bool": true,
+        "param_byte": 3,
+        "param_i16": 16,
+        "param_i32": 32,
+        "param_i64": 64987987976767678,
+        "param_double": 12.5,
+        "param_str": "string",
+        "param_list_i64": [
+          122123343434535,
+          123343235345435
+        ],
+        "param_list_list": [
+          [
+            "q",
+            "w"
+          ],
+          [
+            "e",
+            "r"
+          ]
+        ],
+        "param_list_list_list": [
+          [
+            [
+              1,
+              2,
+              1
+            ],
+            [
+              3,
+              4,
+              3
+            ]
+          ],
+          [
+            [
+              5,
+              6
+            ],
+            [
+              7,
+              8
+            ]
+          ]
+        ],
+        "param_list_list_set": [
+          [
+            [
+              "a",
+              "b"
+            ]
+          ],
+          [
+            "c",
+            "d"
+          ]
+        ],
+        "param_list_list_class": [
+          [
+            {
+              "index": 2,
+              "istrue": "2"
+            },
+            {
+              "index": 4,
+              "istrue": "4"
+            }
+          ],
+          [
+            {
+              "index": 6,
+              "istrue": "6"
+            },
+            {
+              "index": 8,
+              "istrue": "8"
+            }
+          ]
+        ],
+        "param_list_list_map": [
+          [
+            {
+              "a1": "b1",
+              "a2": "b1"
+            }
+          ],
+          [
+            {
+              "a2": "b2",
+              "a3": "b1"
+            }
+          ]
+        ],
+        "param_list_set_basic": [
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            3,
+            4,
+            5
+          ]
+        ],
+        "param_set_list_byte": [
+          [
+            [
+              1,
+              1,
+              2
+            ],
+            [
+              1,
+              2,
+              2
+            ]
+          ],
+          [
+            [
+              1,
+              2,
+              0
+            ],
+            [
+              0,
+              2,
+              1
+            ]
+          ]
+        ],
+        "param_map_str_bool": {
+          "a1": true,
+          "a2": false
+        },
+        "param_map_str_byte": {
+          "a1": 1,
+          "a2": 0
+        },
+        "param_map_str_i16": {
+          "a1": 4,
+          "a2": 5
+        },
+        "param_map_str_i32": {
+          "a1": 143,
+          "a2": 133
+        },
+        "param_map_str_map_list": {
+          "a1": {
+            "a2": [
+              true,
+              false
+            ],
+            "a3": [
+              false,
+              true
+            ]
+          }
+        },
+        "param_map_str_map_map": {
+          "a1": {
+            "a2": {
+              "a3": 123434,
+              "aa": 2432432
+            }
+          }
+        },
+        "param_map_str_map_set": {
+          "a1": {
+            "a2": [
+              1,
+              2
+            ]
+          }
+        },
+        "param_map_i32_class": {
+          "11": {
+            "index": 8,
+            "istrue": "8"
+          },
+          "12": {
+            "index": 9,
+            "istrue": "8"
+          }
+        },
+        "param_set_byte": [
+          1,
+          2,
+          3
+        ],
+        "param_set_i16": [
+          11,
+          12,
+          14
+        ],
+        "param_set_i64": [
+          122322354352455,
+          1342341232432,
+          23445453454353
+        ],
+        "param_set_class": [
+          {
+            "index": 9,
+            "istrue": "8"
+          },
+          {
+            "index": 10,
+            "istrue": "8"
+          }
+        ],
+        "param_set_map_double": [
+          {
+            "a1": 12.3,
+            "a2": 12.2
+          },
+          {
+            "a2": 144.3
+          }
+        ],
+        "param_set_set": [
+          [
+            12.3,
+            12.4
+          ],
+          [
+            11.3,
+            112.5
+          ]
+        ],
+        "param_class": {
+          "index": 9,
+          "istrue": "8"
+        }
+      },
+      {
+        "param_bool": false,
+        "param_byte": 3,
+        "param_i16": 16,
+        "param_i32": 32,
+        "param_i64": 64987987976767678,
+        "param_double": 12.5,
+        "param_str": "string",
+        "param_list_i64": [
+          122123343434535,
+          123343235345435
+        ],
+        "param_list_list": [
+          [
+            "q",
+            "w"
+          ],
+          [
+            "e",
+            "r"
+          ]
+        ],
+        "param_list_list_list": [
+          [
+            [
+              1,
+              2,
+              1
+            ],
+            [
+              3,
+              4,
+              3
+            ]
+          ],
+          [
+            [
+              5,
+              6
+            ],
+            [
+              7,
+              8
+            ]
+          ]
+        ],
+        "param_list_list_set": [
+          [
+            [
+              "a",
+              "b"
+            ]
+          ],
+          [
+            "c",
+            "d"
+          ]
+        ],
+        "param_list_list_class": [
+          [
+            {
+              "index": 2,
+              "istrue": "2"
+            },
+            {
+              "index": 4,
+              "istrue": "4"
+            }
+          ],
+          [
+            {
+              "index": 6,
+              "istrue": "6"
+            },
+            {
+              "index": 8,
+              "istrue": "8"
+            }
+          ]
+        ],
+        "param_list_list_map": [
+          [
+            {
+              "a1": "b1",
+              "a2": "b1"
+            }
+          ],
+          [
+            {
+              "a2": "b2",
+              "a3": "b1"
+            }
+          ]
+        ],
+        "param_list_set_basic": [
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            3,
+            4,
+            5
+          ]
+        ],
+        "param_set_list_byte": [
+          [
+            [
+              1,
+              1,
+              2
+            ],
+            [
+              1,
+              2,
+              2
+            ]
+          ],
+          [
+            [
+              1,
+              2,
+              0
+            ],
+            [
+              0,
+              2,
+              1
+            ]
+          ]
+        ],
+        "param_map_str_bool": {
+          "a1": true,
+          "a2": false
+        },
+        "param_map_str_byte": {
+          "a1": 1,
+          "a2": 0
+        },
+        "param_map_str_i16": {
+          "a1": 4,
+          "a2": 5
+        },
+        "param_map_str_i32": {
+          "a1": 143,
+          "a2": 133
+        },
+        "param_map_str_map_list": {
+          "a1": {
+            "a2": [
+              true,
+              false
+            ],
+            "a3": [
+              false,
+              true
+            ]
+          }
+        },
+        "param_map_str_map_map": {
+          "a1": {
+            "a2": {
+              "a3": 123434,
+              "aa": 2432432
+            }
+          }
+        },
+        "param_map_str_map_set": {
+          "a1": {
+            "a2": [
+              1,
+              2
+            ]
+          }
+        },
+        "param_map_i32_class": {
+          "11": {
+            "index": 8,
+            "istrue": "8"
+          },
+          "12": {
+            "index": 9,
+            "istrue": "8"
+          }
+        },
+        "param_set_byte": [
+          1,
+          2,
+          3
+        ],
+        "param_set_i16": [
+          11,
+          12,
+          14
+        ],
+        "param_set_i64": [
+          122322354352455,
+          1342341232432,
+          23445453454353
+        ],
+        "param_set_class": [
+          {
+            "index": 9,
+            "istrue": "8"
+          },
+          {
+            "index": 10,
+            "istrue": "8"
+          }
+        ],
+        "param_set_map_double": [
+          {
+            "a1": 12.3,
+            "a2": 12.2
+          },
+          {
+            "a2": 144.3
+          }
+        ],
+        "param_set_set": [
+          [
+            12.3,
+            12.4
+          ],
+          [
+            11.3,
+            112.5
+          ]
+        ],
+        "param_class": {
+          "index": 9,
+          "istrue": "8"
+        }
+      }
+    ]
+}
