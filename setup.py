@@ -1,12 +1,16 @@
-# jsonthrift [![Build Status](https://travis-ci.org/WKPlus/jsonthrift.svg?branch=master)](https://travis-ci.org/WKPlus/jsonthrift)
+try:
+    from setuptools import setup
+except ImportError:
+    from distutils.core import setup
 
-  jsonthrift is a python module for convert json data to thrift binary data and verse vice.
+VERSION = '0.1.0'
 
+LONG_DESCRIPTION = '''
+jsonthrift is implemented for serializing and deserializing json to/from thrift.
 
-## Usage
-  You can use it like this:
+Usage
+-----
 
-```python
      >>> transport = 'TBufferedTransport'
      >>> protocol = 'TBinaryProtocol'
      >>> thrift_file = 'tutorial.thrift'
@@ -36,4 +40,20 @@
      >>> #   sequence id
      >>> #   return value
 
-```
+
+'''
+
+setup(
+    name='jsonthrift',
+    description='a package for serializing json to/from thrift',
+    long_description=LONG_DESCRIPTION,
+    author='WKPlus',
+    url='https://github.com/WKPlus/jsonthrift',
+    license='MIT',
+    author_email='qifa.zhao@gmail.com',
+    version=VERSION,
+    packages = ['jsonthrift'],
+    install_requires=['thrift', 'thriftpy'],
+    test_requires=['nose'],
+    zip_safe=False,
+)
