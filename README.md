@@ -37,3 +37,6 @@
      >>> #   return value
 
 ```
+
+## Note
+  Only TBufferedTransport/TFramedTransport and TBinaryProtocol supported now.
