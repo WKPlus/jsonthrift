@@ -2,22 +2,28 @@
 from struct import pack, unpack
 from functools import partial
 from .TTypes import DataType
-from types import StringType, UnicodeType
+from types import StringType, UnicodeType, ListType
 
 
 class TBinaryProtocol(object):
     _TYPE_TRANSFORMER = {
         DataType.I32: {
             "accept": set([StringType, UnicodeType]),
-            "transformer": int,
-        }
+            "transformer": int
+        },
+        DataType.STRING: {
+            "accept": set([ListType]),
+            "transformer": (lambda l:''.join(chr(c) if c>=0 else chr(c+256)
+                                             for c in l))
+        },
     }
     VERSION = -2147418112
     VERSION_MASK = -65536
     TYPE_MASK = 0x000000ff
 
-    def __init__(self, transport):
+    def __init__(self, transport, skip_unknown_field=True):
         self.transport = transport
+        self.skip_unknown_field = skip_unknown_field
 
         self.write_byte = partial(self.basic_write, "!b")
         self.write_i16 = partial(self.basic_write, "!h")
@@ -191,6 +197,12 @@ class TBinaryProtocol(object):
             if ttype == DataType.STOP:
                 break
             _id = self.read_i16()
+            if _id not in thrift_spec:
+                if self.skip_unknown_field:
+                    self.skip_field(ttype)
+                    continue
+                else:
+                    raise Exception("id %d not in thrift spec!" % _id)
             spec = thrift_spec[_id]
             name = spec[1]
             value = self.read_value(ttype, spec[2])
@@ -240,3 +252,37 @@ class TBinaryProtocol(object):
             v = self.read_value(value_ttype, value_spec)
             ret[k] = v
         return ret
+
+    def skip_field(self, ttype):
+        if ttype in self.basic_readers:
+            self.basic_readers[ttype]()
+        elif ttype == DataType.LIST or ttype == DataType.SET:
+            return self.skip_list_or_set()
+        elif ttype == DataType.MAP:
+            return self.skip_map()
+        elif ttype == DataType.STRUCT:
+            return self.skip_struct()
+        else:
+            raise Exception("Not supported ttype: %s" % ttype)
+
+    def skip_list_or_set(self):
+        ttype = self.read_byte()
+        length = self.read_i32()
+        for i in xrange(length):
+            self.skip_field(ttype)
+
+    def skip_map(self):
+        key_ttype = self.read_byte()
+        value_ttype = self.read_byte()
+        length = self.read_i32()
+        for i in xrange(length):
+            self.skip_field(key_ttype)
+            self.skip_field(value_ttype)
+
+    def skip_struct(self):
+        while 1:
+            ttype = self.read_byte()
+            if ttype == DataType.STOP:
+                break
+            _id = self.read_i16()
+            self.skip_field(ttype)

@@ -64,7 +64,7 @@ def compare(a, b):
 
 class SerializeTest(unittest.TestCase):
     def test_serialize(self):
-        with open('data/params.json') as in_fd:
+        with open('data/complex.json') as in_fd:
             data = in_fd.read()
         params = json.loads(data, object_hook=_decode_dict)
         jt = JsonThrift(transport, protocol, thrift_file, service, method)
@@ -82,7 +82,7 @@ class SerializeTest(unittest.TestCase):
         jt = JsonThrift(transport, protocol, thrift_file, service, method)
         content = jt.unpack_request(binary)[4]
 
-        with open('data/params.json') as in_fd:
+        with open('data/complex.json') as in_fd:
             data = in_fd.read()
         params = json.loads(data, object_hook=_decode_dict)
         self.assertTrue(compare(params, content))

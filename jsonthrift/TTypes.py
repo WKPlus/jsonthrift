@@ -1,34 +1,6 @@
 #-*- coding:utf-8 -*-
 
 
-class Byte(object):
-    '''represents thrift byte type'''
-    __slots__ = ['_value']
-    def __init__(self, value):
-        self._value = value
-
-
-class Int16(object):
-    '''represents thrift i16 type'''
-    __slots__ = ['_value']
-    def __init__(self, value):
-        self._value = value
-
-
-class Binary(object):
-    '''represents thrift binary type'''
-    __slots__ = ['_value']
-    def __init__(self, value):
-        self._value = value
-
-
-class Struct(object):
-    '''represents thrift struct type'''
-    __slots__ = ['_value']
-    def __init__(self, value):
-        self._value = value
-
-
 class DataType:
     STOP = 0 #
     VOID = 1 #
