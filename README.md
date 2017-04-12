@@ -22,8 +22,8 @@
     >>> method = 'add'
     >>> params = {'num1': 1, 'num2': 3}
 
-    >>> jt = JsonThrift(transport, protocol, thrift_file, service, method)
-    >>> msg = jt.pack_request(params, 1)
+    >>> jt = JsonThrift(transport, protocol, thrift_file, service)
+    >>> msg = jt.pack_request(method, params, 1)
     >>> response = send_and_recv(msg) # send msg to server, receive response
     >>> result = jt.unpack_response(response)[4]
     >>> print result
@@ -31,7 +31,7 @@
 
     >>> method = 'calculate'
     >>> params = {'logid': 1, 'w':{'op': 4, 'num1': 1, 'num2': 0}}
-    >>> msg = jt.pack_request(params, 2)
+    >>> msg = jt.pack_request(method, params, 2)
     >>> response = send_and_recv(msg) # send msg to server, receive response
     >>> result = jt.unpack_response(response)[4]
     >>> print result

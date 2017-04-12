@@ -67,8 +67,8 @@ class SerializeTest(unittest.TestCase):
         with open('data/complex.json') as in_fd:
             data = in_fd.read()
         params = json.loads(data, object_hook=_decode_dict)
-        jt = JsonThrift(transport, protocol, thrift_file, service, method)
-        msg = jt.pack_request(params, 1)
+        jt = JsonThrift(transport, protocol, thrift_file, service)
+        msg = jt.pack_request(method, params, 1)
 
         with open('data/binary') as in_fd:
             data = in_fd.read().strip()
@@ -79,7 +79,7 @@ class SerializeTest(unittest.TestCase):
         with open('data/binary') as in_fd:
             data = in_fd.read()
         binary = data.decode('string-escape')
-        jt = JsonThrift(transport, protocol, thrift_file, service, method)
+        jt = JsonThrift(transport, protocol, thrift_file, service)
         content = jt.unpack_request(binary)[4]
 
         with open('data/complex.json') as in_fd:

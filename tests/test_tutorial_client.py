@@ -87,8 +87,8 @@ class RemoteCallTest(unittest.TestCase):
         method = 'add'
         params = {"num1": 1, "num2": 3}
         expect = {"success": 4}
-        jt = JsonThrift(transport, protocol, thrift_file, service, method)
-        msg = jt.pack_request(params, 1)
+        jt = JsonThrift(transport, protocol, thrift_file, service)
+        msg = jt.pack_request(method, params, 1)
         result = jt.unpack_response(self.remote_call(msg))[4]
         self.assertTrue(compare(result, expect))
 
@@ -96,8 +96,8 @@ class RemoteCallTest(unittest.TestCase):
         method = 'calculate'
         params = {"logid": 1, "w": { "op": 1, "num1": 1, "num2": 0 } }
         expect = {'success': 1}
-        jt = JsonThrift(transport, protocol, thrift_file, service, method)
-        msg = jt.pack_request(params, 1)
+        jt = JsonThrift(transport, protocol, thrift_file, service)
+        msg = jt.pack_request(method, params, 1)
         result = jt.unpack_response(self.remote_call(msg))[4]
         self.assertTrue(compare(result, expect))
 
@@ -105,8 +105,8 @@ class RemoteCallTest(unittest.TestCase):
         method = 'calculate'
         params = {"logid": 1, "w":{"op": 4, "num1": 1, "num2": 0}}
         expect = {'ouch': {'whatOp': 4, 'why': 'Cannot divide by 0'}}
-        jt = JsonThrift(transport, protocol, thrift_file, service, method)
-        msg = jt.pack_request(params, 1)
+        jt = JsonThrift(transport, protocol, thrift_file, service)
+        msg = jt.pack_request(method, params, 1)
         result = jt.unpack_response(self.remote_call(msg))[4]
         self.assertTrue(compare(result, expect))
 

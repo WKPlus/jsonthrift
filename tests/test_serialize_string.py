@@ -22,8 +22,8 @@ class SerializeStringTest(unittest.TestCase):
         with open('data/string.json') as in_fd:
             data = in_fd.read()
         params = json.loads(data)
-        jt = JsonThrift(transport, protocol, thrift_file, service, method)
-        msg = jt.pack_request(params, 1)
+        jt = JsonThrift(transport, protocol, thrift_file, service)
+        msg = jt.pack_request(method, params, 1)
         expect = (
             '\x80\x01\x00\x01\x00\x00\x00\x09test_call\x00\x00\x00\x01'
             '\x0b\x00\x01\x00\x00\x00\x06\x00\x01\x02\x03\x91\x7f\x00'

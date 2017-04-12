@@ -17,7 +17,7 @@ class JsonThrift(object):
         'TBufferedTransport': TBufferedTransport,
     }
 
-    def __init__(self, transport, protocol, thrift_idl, service, method):
+    def __init__(self, transport, protocol, thrift_idl, service):
         if transport not in JsonThrift.TRANSPORTS:
             raise Exception('Not supported transport: %s' % transport)
         self.transport = JsonThrift.TRANSPORTS[transport]()
@@ -26,13 +26,12 @@ class JsonThrift(object):
         self.protocol = JsonThrift.PROTOCOLS[protocol](self.transport)
         self.thrift_idl = thrift_idl
         self.service = service
-        self.method = method
         self._init()
 
     def _init(self):
-        self.args_spec, self.result_spec = self.get_method_spec()
+        self.method_specs = self._get_method_specs()
 
-    def get_method_spec(self):
+    def _get_method_specs(self):
         thrift_meta = parse(self.thrift_idl).__thrift_meta__
         service_spec = None
         for s in thrift_meta['services']:
@@ -42,30 +41,57 @@ class JsonThrift(object):
             raise Exception('Service %s not found in %s' % (
                 self.service, self.thrift_idl))
 
-        args_spec_name = '%s_args' % self.method
+        method_specs = {}
+        for method in service_spec.thrift_services:
+            method_specs[method] = self._get_method_spec(service_spec, method)
+        return method_specs
+
+    def _get_method_spec(self, service_spec, method):
+        args_spec_name = '%s_args' % method
         if not hasattr(service_spec, args_spec_name):
             raise Exception('Method %s args spec not found in %s' % (
-                self.method, self.service))
+                method, self.service))
         args_spec = getattr(service_spec, args_spec_name).thrift_spec
 
-        result_spec_name = '%s_result' % self.method
+        result_spec_name = '%s_result' % method
         if not hasattr(service_spec, result_spec_name):
             raise Exception('Method %s result spec not found in %s' % (
-                self.method, self.service))
+                method, self.service))
         result_spec = getattr(service_spec, result_spec_name).thrift_spec
         return args_spec, result_spec
 
-    def pack_request(self, json_data, seq_id, msg_type=TMessageType.CALL):
+    def pack_request(self, method, json_data, seq_id,
+                     msg_type=TMessageType.CALL):
+        if method not in self.method_specs:
+            raise Exception('Pack req failed: method %s not defined in %s'
+                            % (method, self.service))
+        args_spec = self.method_specs[method][0]
         return self.protocol.pack_message(
-            msg_type, self.method, seq_id, self.args_spec, json_data)
+            msg_type, method, seq_id, args_spec, json_data)
 
-    def pack_response(self, json_data, seq_id):
+    def pack_response(self, method, json_data, seq_id,
+                      msg_type=TMessageType.REPLY):
+        if method not in self.method_specs:
+            raise Exception('Pack resp failed: method %s not defined in %s'
+                            % (method, self.service))
+        result_spec = self.method_specs[method][1]
         return self.protocol.pack_message(
-            TMessageType.REPLY, self.method, seq_id,
-            self.result_spec, json_data)
+            msg_type, method, seq_id, result_spec, json_data)
 
     def unpack_response(self, msg):
-        return self.protocol.unpack_message(self.result_spec, msg)
+        size, msg_type, method, seq_id = self.protocol.unpack_message_header(msg)
+        if method not in self.method_specs:
+            raise Exception('Unpack resp failed: method %s not defined in %s'
+                            % (method, self.service))
+        result_spec = self.method_specs[method][1]
+        value =  self.protocol.unpack_message_body(result_spec)
+        return size, msg_type, method, seq_id, value
 
     def unpack_request(self, msg):
-        return self.protocol.unpack_message(self.args_spec, msg)
+        size, msg_type, method, seq_id = self.protocol.unpack_message_header(msg)
+        if method not in self.method_specs:
+            raise Exception('Unpack req failed: method %s not defined in %s'
+                            % (method, self.service))
+        args_spec = self.method_specs[method][0]
+        value = self.protocol.unpack_message_body(args_spec)
+        return size, msg_type, method, seq_id, value

@@ -173,13 +173,20 @@ class TBinaryProtocol(object):
         return self.transport.pack_message()
 
     def unpack_message(self, thrift_spec, msg):
-        size = self.transport.unpack_message(msg)
-        msg_type, method, seq_id = self.read_message_begin()
-        values = self.read_fields(thrift_spec)
+        size, msg_type, method, seq_id = self.unpack_message_header(msg)
+        values = self.unpack_message_body(thrift_spec)
         # read_fields will read message end
         # no need to read message end here
         # self.read_message_end()
         return size, msg_type, method, seq_id, values
+
+    def unpack_message_header(self, msg):
+        size = self.transport.unpack_message(msg)
+        msg_type, method, seq_id = self.read_message_begin()
+        return size, msg_type, method, seq_id
+
+    def unpack_message_body(self, thrift_spec):
+        return self.read_fields(thrift_spec)
 
     def read_message_begin(self):
         msg_type = self.read_i32() & TBinaryProtocol.TYPE_MASK
