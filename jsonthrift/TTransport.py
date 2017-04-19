@@ -12,11 +12,13 @@ class TTransport(object):
     def reset(self):
         self._buf = []
 
+    def set_instream(self, msg):
+        self._msg = StringIO(msg)
+
     def pack_message(self):
         return ''.join(self._buf)
 
-    def unpack_message(self, msg):
-        self._msg = StringIO(msg)
+    def unpack_message(self):
         return None
 
     def read(self, size):

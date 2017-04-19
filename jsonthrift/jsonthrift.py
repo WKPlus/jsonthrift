@@ -84,7 +84,7 @@ class JsonThrift(object):
             raise Exception('Unpack resp failed: method %s not defined in %s'
                             % (method, self.service))
         result_spec = self.method_specs[method][1]
-        value =  self.protocol.unpack_message_body(result_spec)
+        value =  self.protocol.read_fields(result_spec)
         return size, msg_type, method, seq_id, value
 
     def unpack_request(self, msg):
@@ -93,5 +93,5 @@ class JsonThrift(object):
             raise Exception('Unpack req failed: method %s not defined in %s'
                             % (method, self.service))
         args_spec = self.method_specs[method][0]
-        value = self.protocol.unpack_message_body(args_spec)
+        value = self.protocol.read_fields(args_spec)
         return size, msg_type, method, seq_id, value

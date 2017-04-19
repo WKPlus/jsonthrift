@@ -12,7 +12,6 @@ class TFramedTransport(TTransport):
         msg = ''.join(self._buf)
         return pack('!i', len(msg)) + msg
 
-    def unpack_message(self, msg):
-        self._msg = StringIO(msg)
+    def unpack_message(self):
         size, = unpack('!i', self._msg.read(4))
         return size

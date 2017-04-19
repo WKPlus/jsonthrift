@@ -98,8 +98,8 @@ class TBinaryProtocol(object):
             self.write_value(key_ttype, key_spec, k)
             self.write_value(value_ttype, value_spec, v)
 
-    def write_struct(self, _class, value):
-        self.write_fields(_class.thrift_spec, value)
+    def write_struct(self, thrift_spec, value):
+        self.write_fields(thrift_spec, value)
         self.write_byte(DataType.STOP)
 
     def verify_value(self, ttype, value):
@@ -124,7 +124,7 @@ class TBinaryProtocol(object):
         if ttype in DataType.BASIC_TYPES:
             self.basic_writers[ttype](value)
         elif ttype == DataType.STRUCT:
-            self.write_struct(thrift_spec, value)
+            self.write_struct(thrift_spec.thrift_spec, value)
         elif ttype == DataType.LIST or ttype == DataType.SET:
             self.write_list_or_set(thrift_spec, value)
         elif ttype == DataType.MAP:
@@ -172,20 +172,29 @@ class TBinaryProtocol(object):
         self.write_message_end()
         return self.transport.pack_message()
 
+    def pack_fields(self, thrift_spec, values):
+        self.transport.reset()
+        self.write_struct(thrift_spec, values)
+        return self.transport.pack_message()
+
     def unpack_message(self, thrift_spec, msg):
-        size, msg_type, method, seq_id = self.unpack_message_header(msg)
-        values = self.unpack_message_body(thrift_spec)
+        self.transport.set_instream(msg)
+        size = self.transport.unpack_message()
+        msg_type, method, seq_id = self.read_message_begin()
+        values = self.read_fields(thrift_spec)
         # read_fields will read message end
         # no need to read message end here
         # self.read_message_end()
         return size, msg_type, method, seq_id, values
 
     def unpack_message_header(self, msg):
-        size = self.transport.unpack_message(msg)
+        self.transport.set_instream(msg)
+        size = self.transport.unpack_message()
         msg_type, method, seq_id = self.read_message_begin()
         return size, msg_type, method, seq_id
 
-    def unpack_message_body(self, thrift_spec):
+    def unpack_struct(self, thrift_spec, msg):
+        self.transport.set_instream(msg)
         return self.read_fields(thrift_spec)
 
     def read_message_begin(self):
