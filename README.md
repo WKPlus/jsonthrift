@@ -14,7 +14,7 @@
   You can use it like this:
 
 ```python
-    >>> from jsonthrift import JsonThrift
+    >>> from jsonthrift.jsonthrift import JsonThrift
     >>> transport = 'TBufferedTransport'
     >>> protocol = 'TBinaryProtocol'
     >>> thrift_file = 'tutorial.thrift'
