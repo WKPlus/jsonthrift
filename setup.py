@@ -3,7 +3,7 @@ try:
 except ImportError:
     from distutils.core import setup
 
-VERSION = '0.1.2'
+VERSION = '0.1.3'
 
 LONG_DESCRIPTION = '''
 jsonthrift is implemented for serializing and deserializing json to/from thrift.
