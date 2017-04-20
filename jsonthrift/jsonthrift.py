@@ -60,7 +60,7 @@ class JsonThrift(object):
         result_spec = getattr(service_spec, result_spec_name).thrift_spec
         return args_spec, result_spec
 
-    def pack_request(self, method, json_data, seq_id,
+    def pack_request(self, method, json_data, seq_id=1,
                      msg_type=TMessageType.CALL):
         if method not in self.method_specs:
             raise Exception('Pack req failed: method %s not defined in %s'
