@@ -1,4 +1,4 @@
-# jsonthrift [![Build Status](https://travis-ci.org/WKPlus/jsonthrift.svg?branch=master)](https://travis-ci.org/WKPlus/jsonthrift)
+# jsonthrift [![Travis](https://img.shields.io/travis/WKPlus/jsonthrift.svg?style=plastic)](https://travis-ci.org/WKPlus/jsonthrift) [![PyPI](https://img.shields.io/pypi/v/jsonthrift.svg?style=plastic)](https://pypi.python.org/pypi/jsonthrift)
 
   jsonthrift is implemented for serializing and deserializing json to/from thrift.
 
