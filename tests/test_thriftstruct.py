@@ -35,7 +35,7 @@ class ThriftStructTest(unittest.TestCase):
             'index': 2,
             'istrue': 'true'
         }
-        self.assertDictEqual(expect, data)
+        self.assertEqual(expect, data)
 
 
 if __name__ == '__main__':
