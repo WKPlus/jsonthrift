@@ -7,9 +7,21 @@ from types import StringType, UnicodeType, ListType
 
 class TBinaryProtocol(object):
     _TYPE_TRANSFORMER = {
+        DataType.I08: {
+            "accept": set([StringType, UnicodeType]),
+            "transformer": int
+        },
+        DataType.I16: {
+            "accept": set([StringType, UnicodeType]),
+            "transformer": int
+        },
         DataType.I32: {
             "accept": set([StringType, UnicodeType]),
             "transformer": int
+        },
+        DataType.I64: {
+            "accept": set([StringType, UnicodeType]),
+            "transformer": long
         },
         DataType.STRING: {
             "accept": set([ListType]),
